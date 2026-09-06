@@ -1,32 +1,38 @@
-# Smart Home Cybersecurity IDS
+	modified:   README.md
 
-An IoT-focused Intrusion Detection System (IDS) designed to monitor, detect, and respond to suspicious activity in a smart home environment.
+no changes added to commit (use "git add" and/or "git commit -a")
 
-The project combines ESP32-based IoT devices, a Python-based cybersecurity engine, rule-based detection, machine-learning anomaly detection, and an ESP32 security controller.
+SmartHomeCyberSecurity on  main [!] via 🐍 v3.9.6 
+❯ git add README.md
 
-## System Architecture
+SmartHomeCyberSecurity on  main [+] via 🐍 v3.9.6 
+❯ git commit -m "Complete project demonstration"
+[main 01f8575] Complete project demonstration
+ Committer: Anshul Tripathi <anshul@Anshuls-MacBook-Air.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
 
-![Smart Home Cybersecurity IDS Architecture](docs/architecture.jpeg)
+    git config --global --edit
 
-## Overview
+After doing this, you may fix the identity used for this commit with:
 
-The system consists of three major components:
+    git commit --amend --reset-author
 
-### 1. ESP32 Smart Home Device
+ 1 file changed, 699 insertions(+), 6 deletions(-)
 
-The first ESP32 represents the smart home environment and provides:
+SmartHomeCyberSecurity on  main [⇡] via 🐍 v3.9.6 
+❯ git push
+To https://github.com/anshultripathi-dev/SmartHomeCyberSecurity.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/anshultripathi-dev/SmartHomeCyberSecurity.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
-- DHT11 temperature and humidity monitoring
-- 4x4 keypad authentication
-- Smart lock using SG90 servo
-- LED control
-- Web dashboard
-- HTTP telemetry API
-- Failed authentication tracking
-- Request monitoring
-- Wi-Fi signal monitoring
-
-Telemetry is exposed through:
-
-```text
-GET /security/status
+SmartHomeCyberSecurity on  main [⇡] via 🐍 v3.9.6 
+❯ 
