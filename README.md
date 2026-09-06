@@ -1,4 +1,3 @@
-cat > README.md <<'EOF'
 # Smart Home Cybersecurity IDS
 
 An IoT-focused Intrusion Detection System (IDS) designed to monitor, detect, and respond to suspicious activity in a smart home environment.
