@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+>
+
+<title>Smart Home Security Dashboard</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    padding: 25px;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    background: #f2f2f2;
+
+}
+
+
+.container {
+
+    max-width: 1000px;
+
+    margin: auto;
+
+}
+
+
+h1 {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+
+}
+
+
+.status-card {
+
+    background: white;
+
+    padding: 35px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 4px 12px
+        rgba(0,0,0,0.12);
+
+}
+
+
+.status {
+
+    font-size: 42px;
+
+    font-weight: bold;
+
+}
+
+
+.safe {
+
+    color: #198754;
+
+}
+
+
+.alert {
+
+    color: #dc3545;
+
+}
+
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+
+}
+
+
+.card {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 4px 12px
+        rgba(0,0,0,0.10);
+
+}
+
+
+.value {
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+}
+
+
+.label {
+
+    color: #666;
+
+    margin-bottom: 5px;
+
+}
+
+
+button {
+
+    border: none;
+
+    padding: 13px 22px;
+
+    margin: 5px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+}
+
+
+.safe-button {
+
+    background: #198754;
+
+    color: white;
+
+}
+
+
+.attack-button {
+
+    background: #dc3545;
+
+    color: white;
+
+}
+
+
+.test-button {
+
+    background: #333;
+
+    color: white;
+
+}
+
+
+@media(max-width:700px) {
+
+    .grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>
+Smart Home Security Dashboard
+</h1>
+
+
+<!-- =====================================================
+     MAIN STATUS
+     ===================================================== -->
+
+<div class="status-card">
+
+
+<div
+    id="mainStatus"
+    class="status safe"
+>
+SAFE
+</div>
+
+
+<p id="attackType">
+No intrusion detected
+</p>
+
+
+</div>
+
+
+<!-- =====================================================
+     INFORMATION
+     ===================================================== -->
+
+<div class="grid">
+
+
+<div class="card">
+
+<h2>Detection</h2>
+
+
+<p class="label">
+ML Prediction
+</p>
+
+<p
+    id="mlPrediction"
+    class="value"
+>
+NORMAL
+</p>
+
+
+<p class="label">
+ML Score
+</p>
+
+<p
+    id="mlScore"
+    class="value"
+>
+0
+</p>
+
+
+<p class="label">
+Rule Result
+</p>
+
+<p
+    id="ruleResult"
+    class="value"
+>
+NONE
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>Network</h2>
+
+
+<p class="label">
+Request Rate
+</p>
+
+<p
+    id="requestRate"
+    class="value"
+>
+0
+</p>
+
+
+<p class="label">
+Bad Request Rate
+</p>
+
+<p
+    id="badRequestRate"
+    class="value"
+>
+0
+</p>
+
+
+<p class="label">
+Failed PIN Attempts
+</p>
+
+<p
+    id="failedPIN"
+    class="value"
+>
+0
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>Environment</h2>
+
+
+<p class="label">
+Temperature
+</p>
+
+<p
+    id="temperature"
+    class="value"
+>
+0 C
+</p>
+
+
+<p class="label">
+Humidity
+</p>
+
+<p
+    id="humidity"
+    class="value"
+>
+0 %
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>Security Controller</h2>
+
+
+<p class="label">
+ESP32 #2
+</p>
+
+<p
+    id="espStatus"
+    class="value"
+>
+Checking...
+</p>
+
+
+<p class="label">
+Attack Type
+</p>
+
+<p
+    id="attack"
+    class="value"
+>
+NONE
+</p>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     CONTROLS
+     ===================================================== -->
+
+<div class="card"
+     style="margin-top:20px;text-align:center;">
+
+<h2>Security Controls</h2>
+
+
+<button
+    class="safe-button"
+    onclick="returnSafe()"
+>
+RETURN TO SAFE
+</button>
+
+
+<h3>Test Detection</h3>
+
+
+<button
+    class="test-button"
+    onclick="testAttack('normal')"
+>
+NORMAL
+</button>
+
+
+<button
+    class="test-button"
+    onclick="testAttack('flood')"
+>
+REQUEST FLOOD
+</button>
+
+
+<button
+    class="test-button"
+    onclick="testAttack('probe')"
+>
+SERVICE PROBING
+</button>
+
+
+<button
+    class="test-button"
+    onclick="testAttack('bruteforce')"
+>
+BRUTE FORCE
+</button>
+
+
+<button
+    class="test-button"
+    onclick="testAttack('temperature')"
+>
+TEMPERATURE
+</button>
+
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+// =====================================================
+// UPDATE DASHBOARD
+// =====================================================
+
+function updateDashboard() {
+
+    fetch("/api/status")
+
+        .then(
+            response =>
+                response.json()
+        )
+
+        .then(data => {
+
+
+            let status =
+                document.getElementById(
+                    "mainStatus"
+                );
+
+
+            status.innerText =
+                data.state;
+
+
+            if (
+                data.state === "ALERT"
+            ) {
+
+                status.className =
+                    "status alert";
+
+            }
+
+            else {
+
+                status.className =
+                    "status safe";
+
+            }
+
+
+            // ------------------------------------------
+            // Attack
+            // ------------------------------------------
+
+            document.getElementById(
+                "attackType"
+            ).innerText =
+
+                data.attack_type === "NONE"
+
+                ? "No intrusion detected"
+
+                : "Intrusion: " +
+                  data.attack_type;
+
+
+            // ------------------------------------------
+            // ML
+            // ------------------------------------------
+
+            document.getElementById(
+                "mlPrediction"
+            ).innerText =
+                data.ml_prediction;
+
+
+            document.getElementById(
+                "mlScore"
+            ).innerText =
+                Number(
+                    data.ml_score
+                ).toFixed(4);
+
+
+            document.getElementById(
+                "ruleResult"
+            ).innerText =
+                data.rule_result;
+
+
+            // ------------------------------------------
+            // Network
+            // ------------------------------------------
+
+            document.getElementById(
+                "requestRate"
+            ).innerText =
+                Number(
+                    data.request_rate
+                ).toFixed(2);
+
+
+            document.getElementById(
+                "badRequestRate"
+            ).innerText =
+                Number(
+                    data.bad_request_rate
+                ).toFixed(2);
+
+
+            document.getElementById(
+                "failedPIN"
+            ).innerText =
+                data.failed_pin_attempts;
+
+
+            // ------------------------------------------
+            // Environment
+            // ------------------------------------------
+
+            document.getElementById(
+                "temperature"
+            ).innerText =
+                Number(
+                    data.temperature
+                ).toFixed(1)
+                + " C";
+
+
+            document.getElementById(
+                "humidity"
+            ).innerText =
+                Number(
+                    data.humidity
+                ).toFixed(1)
+                + " %";
+
+
+            // ------------------------------------------
+            // Attack
+            // ------------------------------------------
+
+            document.getElementById(
+                "attack"
+            ).innerText =
+                data.attack_type;
+
+        });
+
+}
+
+
+// =====================================================
+// TEST ATTACK
+// =====================================================
+
+function testAttack(type) {
+
+    fetch(
+        "/api/test/" + type
+    )
+
+    .then(
+        response =>
+            response.json()
+    )
+
+    .then(
+        () =>
+            updateDashboard()
+    );
+
+}
+
+
+// =====================================================
+// RETURN SAFE
+// =====================================================
+
+function returnSafe() {
+
+    fetch("/api/safe")
+
+        .then(
+            response =>
+                response.json()
+        )
+
+        .then(
+            () =>
+                updateDashboard()
+        );
+
+}
+
+
+// =====================================================
+// ESP32 STATUS
+// =====================================================
+
+function updateESP32Status() {
+
+    fetch("/api/esp32")
+
+        .then(
+            response =>
+                response.json()
+        )
+
+        .then(data => {
+
+            document.getElementById(
+                "espStatus"
+            ).innerText =
+
+                data.connected
+                ? "CONNECTED"
+                : "DISCONNECTED";
+
+        });
+
+}
+
+
+// =====================================================
+// AUTO UPDATE
+// =====================================================
+
+setInterval(
+    updateDashboard,
+    1000
+);
+
+
+setInterval(
+    updateESP32Status,
+    3000
+);
+
+
+updateDashboard();
+
+updateESP32Status();
+
+</script>
+
+
+</body>
+
+</html>

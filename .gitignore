@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Credentials / keys
+*.pem
+*.key
+*.crt
+id_rsa
+id_rsa.pub
+
+# Logs
+*.log
+logs/*
+!logs/.gitkeep
+
+# ML generated files
+*.pkl
+*.joblib
+*.h5
+*.keras
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Build / temporary files
+build/
+dist/
+*.tmp
+*.bak
+
+# Arduino
+*.hex
+*.elf
