@@ -7,7 +7,7 @@ The project combines ESP32-based IoT devices, a Python-based cybersecurity engin
 
 ## System Architecture
 
-![Smart Home Cybersecurity IDS Architecture](docs/architecture.png)
+![Smart Home Cybersecurity IDS Architecture](docs/architecture.jpeg)
 
 ## Overview
 
